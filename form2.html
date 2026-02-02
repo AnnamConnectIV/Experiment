@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .al{
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form {
+            width: 350px;
+            padding: 40px 30px;
+            border-radius: 25px;
+            border-style:solid;
+            background: linear-gradient(250deg, #4facfe, #00f2fe);  
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .form label {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+        .form input{
+            margin-bottom: 5px;
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        .form input:focus{
+            border-color: rgb(0, 0, 0);
+        }
+        .error{
+            color: red;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+       .but{
+    margin-right:100px;
+    max-width: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form button{
+    font-family:monospace;
+    margin-left:120px;    
+    margin-top: 15px;
+    padding: 5px 10px;
+    width: 100px;
+    height:50px;
+    border: 2px solid #ffffff;
+    background: #ffffff;
+    border-radius: 10px;
+    transition: all ease 0.3s;
+}
+
+        .form button:hover{
+            transform: scale(1.2);
+            color: rgb(255, 255, 255);
+            background: #000000;
+            border-color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+<div class="al">
+    <form class="form" id="myForm">
+
+        <label>Name:</label>
+        <input type="text" id="name">
+        <div class="error" id="nameError"></div>
+
+        <label>Email:</label>
+        <input type="text" id="email" placeholder="useer@gmail.com">
+        <div class="error" id="emailError"></div>
+
+        <label>Phone:</label>
+        <input type="text" id="phone" placeholder="+91">
+        <div class="error" id="phoneError"></div>
+
+        <label>Enter your password:</label>
+        <input type="password" id="password" placeholder="Enter atleast 6 characters">
+        <div class="error" id="passwordError"></div>
+
+        <label>Confirm password:</label>
+        <input type="password" id="confirmPassword">
+        <div class="error" id="confirmError"></div>
+
+        <div class="but">
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let name = name.value.trim();
+    let email = email.value.trim();
+    let phone = phone.value.trim();
+    let password = password.value;
+    let confirmPassword = confirmPassword.value;
+
+    nameError.textContent = "";
+    emailError.textContent = "";
+    phoneError.textContent = "";
+    passwordError.textContent = "";
+    confirmError.textContent = "";
+
+    let isValid = true;
+
+    // Name
+    if (name === "") {
+        nameError.textContent = "Name is required";
+        isValid = false;
+    }
+
+    // Email
+    let emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (email === "") {
+        emailError.textContent = "Email is required";
+        isValid = false;
+    } else if (!emailPattern.test(email)) {
+        emailError.textContent = "Invalid email format";
+        isValid = false;
+    }
+
+    // Phone (India: 10 digits, optional +91)
+    let phonePattern = /^(\+91)?[6-9]\d{9}$/;
+    if (phone === "") {
+        phoneError.textContent = "Phone number is required";
+        isValid = false;
+    } else if (!phonePattern.test(phone)) {
+        phoneError.textContent = "Invalid phone number";
+        isValid = false;
+    }
+
+    // Password
+    if (password === "") {
+        passwordError.textContent = "Password is required";
+        isValid = false;
+    } else if (password.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters";
+        isValid = false;
+    }
+
+    // Confirm password
+    if (confirmPassword === "") {
+        confirmError.textContent = "Confirm your password";
+        isValid = false;
+    } else if (password !== confirmPassword) {
+        confirmError.textContent = "Passwords do not match";
+        isValid = false;
+    }
+
+    if (isValid) {
+        alert("Form submitted successfully!");
+        this.reset();
+    }
+});
+</script>
+
+</body>
+</html>
